@@ -1,21 +1,21 @@
 - name: Setup Web Servers Based on Environment
-  hosts: _test_server #all, webserver1, webserver, - spesifik sunucu, grup yada tüm sunucular seçeneklerini yazabiliriz. _test_server yazılmasının nedeni - key: tags.Name başına _ gelmesinin sebebi aws dinammik envanter ile ilgili
-  become: yes #sudo ya ihtiyaç duyulmaması için adim yetkisi
-  remote_user: ubuntu #serverların kullanıcı adı bağlanılacak user
+  hosts: _test_server
+  become: yes
+  remote_user: ubuntu
 
-  tasks: #makinede yapılacak tasks'ler
+  tasks:
     - name: Update apt repository cache
-      ansible.builtin.apt: #ubuntular apt update komutunu çalıştırır. Genelde ilk task olarak yazılır. modüller sayesinde yapıldı
+      ansible.builtin.apt:
         update_cache: yes
 
     - name: Install Nginx
-      apt: #apt modülü koullanımı nginx kurulumu gerçekleştirilir
+      apt:
         name: nginx
         state: latest
 
     - name: Create index.html with message
-      ansible.builtin.copy: #kopyalama modülü
-        dest: /var/www/html/index.html #hedefe yazdırma komutu
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
         content: |
           <html>
           <head><title>Techpro Education AWS-DevOps Team</title></head>
@@ -24,14 +24,12 @@
             <p>Techpro Education AWS-DevOps Team olarak Task-2 basarili sonuclanmistir...</p>
           </body>
           </html>
-        owner: www-data #chown belirleme
-        group: www-data #chown belirleme
-        mode: '0644' #chmod belirleme
+        owner: www-data
+        group: www-data
+        mode: '0644'
 
     - name: Restart Nginx
-      ansible.builtin.service: #servis işlem modülü
-        name: nginx #hangi servis
-        state: restarted #yapılacak işlem
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
 
-#ansible 'da task1 'de hata alırsanız oraya kadar olan geçerlidir sonrasını skip eder. Bazı parametreler ile bu süreç devam ettirilebilir
-# --- ile aynı dosyada ayrı bir playbook'da yazmanızı sağlar 
