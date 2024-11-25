@@ -61,8 +61,6 @@ pipeline {
              }
         }
 
-    }
-
     post {
         always {
             echo 'Post Always block'
