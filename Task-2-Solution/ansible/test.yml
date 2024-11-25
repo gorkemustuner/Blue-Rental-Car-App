@@ -33,3 +33,5 @@
         name: nginx #hangi servis
         state: restarted #yapılacak işlem
 
+#ansible 'da task1 'de hata alırsanız oraya kadar olan geçerlidir sonrasını skip eder. Bazı parametreler ile bu süreç devam ettirilebilir
+# --- ile aynı dosyada ayrı bir playbook'da yazmanızı sağlar 
